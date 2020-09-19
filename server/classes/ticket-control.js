@@ -88,6 +88,10 @@ class TicketControl {
     getUltimoTicket() {
         return `Ticket ${this.ultimo}`
     }
+
+    getUltimos4Tickets() {
+        return this.ultimos4Tickets
+    }
 }
 
 module.exports = {

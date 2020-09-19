@@ -19,7 +19,10 @@ io.on('connection', (client) => {
         console.log('Usuario desconectado');
     });
 
-    client.emit('estadoActual', { actual: ticketControl.getUltimoTicket() })
+    client.emit('estadoActual', {
+        actual: ticketControl.getUltimoTicket(),
+        ultimos4Tickets: ticketControl.getUltimos4Tickets()
+    })
 
     client.on('atenderTicket', (data, callback) => {
         if (!data.escritorio) {
@@ -32,5 +35,11 @@ io.on('connection', (client) => {
         let atenderTicket = ticketControl.atenderTicket(data.escritorio);
 
         callback(atenderTicket)
+
+        client.broadcast.emit('actualizarUltimos4', {
+            ultimos4Tickets: ticketControl.getUltimos4Tickets()
+        })
     })
+
+
 });
